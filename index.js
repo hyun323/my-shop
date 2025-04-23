@@ -5,10 +5,35 @@ document.addEventListener('DOMContentLoaded', function() {
     const addButton = document.getElementById('addButton');
     const outputContainer = document.getElementById('outputContainer');
     const editLink = document.getElementById('editLink');
+    const pointValue = document.getElementById('pointValue');
+    const paymentButton = document.getElementById('paymentButton');
 
     // 초기에 메뉴 작성하기 버튼 비활성화
     if (editLink) {
         editLink.classList.add('disabled');
+    }
+
+    // 저장된 포인트 불러오기
+    const savedPoint = localStorage.getItem('point');
+    if (savedPoint) {
+        pointValue.textContent = savedPoint;
+    }
+
+    // 카드결제 버튼 클릭 이벤트
+    if (paymentButton) {
+        paymentButton.addEventListener('click', function() {
+            const currentPoint = parseInt(pointValue.textContent);
+            if (currentPoint > 0) {
+                if (confirm('정말로 결제하시겠습니까?')) {
+                    // 포인트 초기화
+                    pointValue.textContent = '0';
+                    localStorage.setItem('point', '0');
+                    alert('결제가 완료되었습니다.');
+                }
+            } else {
+                alert('사용할 포인트가 없습니다.');
+            }
+        });
     }
 
     // menu.txt 파일 자동 로드
@@ -139,4 +164,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 페이지 로드 시 현재 요일 강조 표시
     highlightCurrentDay();
+
+    // 만족도 조사 관련 요소
+    const satisfactionRadios = document.querySelectorAll('input[name="satisfaction"]');
+    const submitButton = document.getElementById('submitSatisfaction');
+
+    // 제출 버튼 활성화
+    if (submitButton) {
+        submitButton.disabled = false;
+    }
+
+    // 제출 버튼 클릭 이벤트
+    if (submitButton) {
+        submitButton.addEventListener('click', function() {
+            const selectedValue = document.querySelector('input[name="satisfaction"]:checked');
+            if (selectedValue) {
+                alert('의견이 제출되었습니다. 감사합니다!');
+                // 선택 초기화
+                selectedValue.checked = false;
+            } else {
+                alert('만족도를 선택해주세요.');
+            }
+        });
+    }
 }); 

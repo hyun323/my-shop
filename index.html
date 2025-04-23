@@ -19,6 +19,7 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
         }
         .menu-container {
             display: grid;
@@ -65,6 +66,12 @@
             text-decoration: underline;
         }
 
+        .nav-link.disabled {
+            color: #cccccc;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
         .file-input {
             display: none;
         }
@@ -90,21 +97,137 @@
             cursor: not-allowed;
         }
 
-        .nav-link.disabled {
-            color: #cccccc;
+        .point-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .point-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .point-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .payment-button {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .payment-button:hover {
+            background-color: #27ae60;
+        }
+
+        .satisfaction-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        .satisfaction-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .satisfaction-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .satisfaction-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .satisfaction-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .satisfaction-option label {
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .submit-button {
+            display: block;
+            margin: 20px auto 0;
+            padding: 12px 30px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #1976D2;
+        }
+
+        .submit-button:disabled {
+            background-color: #cccccc;
             cursor: not-allowed;
-            pointer-events: none;
         }
 
         @media (max-width: 768px) {
             .menu-container {
                 grid-template-columns: 1fr;
             }
+            .point-container {
+                position: static;
+                margin-top: 20px;
+            }
+            .satisfaction-options {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .satisfaction-option {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 5px 0;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="point-container">
+            <div class="point-title">보유 포인트</div>
+            <div class="point-value" id="pointValue">20,000</div>
+            <button id="paymentButton" class="payment-button">카드결제</button>
+        </div>
         <input type="file" id="fileInput" class="file-input" accept=".txt">
         <button id="fileButton" class="file-button">메뉴 파일 불러오기</button>
         <a href="edit.html" class="nav-link disabled" id="editLink">메뉴 작성하기 →</a>
@@ -134,6 +257,32 @@
                     <li>메뉴를 선택해주세요</li>
                 </ul>
             </div>
+        </div>
+        <div class="satisfaction-container">
+            <div class="satisfaction-title">오늘의 식사 만족도는 어떠신가요?</div>
+            <div class="satisfaction-options">
+                <div class="satisfaction-option">
+                    <input type="radio" id="very-satisfied" name="satisfaction" value="5">
+                    <label for="very-satisfied">매우 만족</label>
+                </div>
+                <div class="satisfaction-option">
+                    <input type="radio" id="satisfied" name="satisfaction" value="4">
+                    <label for="satisfied">만족</label>
+                </div>
+                <div class="satisfaction-option">
+                    <input type="radio" id="normal" name="satisfaction" value="3">
+                    <label for="normal">보통</label>
+                </div>
+                <div class="satisfaction-option">
+                    <input type="radio" id="dissatisfied" name="satisfaction" value="2">
+                    <label for="dissatisfied">불만족</label>
+                </div>
+                <div class="satisfaction-option">
+                    <input type="radio" id="very-dissatisfied" name="satisfaction" value="1">
+                    <label for="very-dissatisfied">매우 불만족</label>
+                </div>
+            </div>
+            <button id="submitSatisfaction" class="submit-button" disabled>의견 제출하기</button>
         </div>
     </div>
     <script src="index.js"></script>
