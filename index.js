@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 메뉴 업데이트 함수
     function updateMenu(menuData) {
-        const days = ['월요일', '화요일', '수요일', '목요일', '금요일'];
+        const days = ['월요일', '화요일', '수요일', '목요일'];
         
         days.forEach(day => {
             const menuList = document.querySelector(`.${day}-menu .menu-list`);
